@@ -1,13 +1,16 @@
 import React from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Main = () => {
   return (
     <div>
       {/* navbar */}
-<h1>main</h1>
+      <Navbar></Navbar>
       {/* outlet */}
 
       {/* footer */}
+      <Footer></Footer>
     </div>
   );
 };
