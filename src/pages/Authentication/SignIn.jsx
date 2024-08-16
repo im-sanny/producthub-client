@@ -5,20 +5,39 @@ import toast from "react-hot-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const { sign, signInWithGoogle } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   // google signIn
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
       navigate("/");
-      toast.success('Sign In Successful')
+      toast.success("Sign In Successful");
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
+
   // email password signIn
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const pass = form.password.value;
+    console.log({ email, pass });
+
+    try {
+      // user login
+      const result = await signIn(email, pass);
+      console.log(result);
+      navigate("/");
+      toast.success("Sign In Successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   return (
     <div className="flex justify-center items-center my-20 min-h-[calc(100vh-306px)]">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl ">
@@ -73,7 +92,7 @@ const SignIn = () => {
 
             <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
           </div>
-          <form>
+          <form onSubmit={handleSignIn}>
             <div className="mt-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-600 "
