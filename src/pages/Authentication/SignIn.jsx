@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/Authprovider";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,10 +12,10 @@ const SignIn = () => {
     try {
       await signInWithGoogle();
       navigate("/");
-      // toast.success('Sign In Successful')
+      toast.success('Sign In Successful')
     } catch (error) {
       console.log(error);
-      // toast.error(error.message)
+      toast.error(error.message)
     }
   };
   // email password signIn
