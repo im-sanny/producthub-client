@@ -3,7 +3,7 @@ import { AuthContext } from "../provider/Authprovider";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   return (
     <div className="navbar bg-green-100 shadow-sm mx-auto">
       <div className="flex-1">
@@ -44,7 +44,7 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li className="mt-2">
-                <button className="bg-gray-200 block text-center">
+                <button onClick={logOut} className="bg-gray-200 block text-center">
                   Logout
                 </button>
               </li>

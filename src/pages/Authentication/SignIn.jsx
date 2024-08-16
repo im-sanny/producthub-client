@@ -12,7 +12,7 @@ const SignIn = () => {
     try {
       await signInWithGoogle();
       navigate("/");
-      toast.success("Sign In Successful");
+      toast.success("SignIn Successful");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
