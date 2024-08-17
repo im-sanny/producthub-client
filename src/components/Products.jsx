@@ -1,7 +1,7 @@
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import Card from "./Card";
 
-const Products = () => {
+const Products = ({ products }) => {
   return (
     <>
       {/* main search */}
@@ -23,16 +23,22 @@ const Products = () => {
           <option disabled selected>
             Brand Name
           </option>
-          <option>Han Solo</option>
-          <option>Greedo</option>
+          <option>SoundMax</option>
+          <option>TechHold</option>
+          <option>SafeCarry</option>
+          <option>FitPro</option>
+          <option>EcoFlex</option>
         </select>
 
         <select className="select select-bordered w-full max-w-xs">
           <option disabled selected>
             Category Name
           </option>
-          <option>Han Solo</option>
-          <option>Greedo</option>
+          <option>Electronics</option>
+          <option>Accessories</option>
+          <option>Bags</option>
+          <option>Wearables</option>
+          <option>Fitness</option>
         </select>
 
         <select className="select select-bordered w-full max-w-xs">
@@ -61,7 +67,11 @@ const Products = () => {
       </div>
 
       {/* cards */}
-      <Card></Card>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-5 lg:mb-10 my-5 lg:mx-16 mx-5">
+        {products.map((product) => (
+          <Card key={product._id} product={product} />
+        ))}
+      </div>
 
       {/* pagination */}
       <div className="flex flex-col justify-center items-center w-full mb-10">
