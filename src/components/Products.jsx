@@ -17,7 +17,7 @@ const Products = () => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios(
-        `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&limit=10`
+        `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&limit=8`
       );
       setProducts(data.products);
       setTotalPages(data.totalPages);
@@ -188,7 +188,7 @@ const Products = () => {
 
       {/* pagination */}
       <div className="flex flex-col justify-center items-center w-full mb-10">
-        <div className="flex">
+        <div className="flex flex-wrap justify-center items-center">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             className={`px-4 py-2 mx-1 ${
@@ -200,23 +200,26 @@ const Products = () => {
           >
             <div className="flex items-center -mx-1">
               <GoArrowLeft />
-              <span className="mx-1">Previous</span>
+              <span className="mx-1 hidden sm:inline">Previous</span>
             </div>
           </button>
 
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageChange(index + 1)}
-              className={`px-4 py-2 mx-1 transition-colors duration-300 transform rounded-md ${
-                currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 hover:text-white"
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {/* Page Numbers for larger screens */}
+          <div className="hidden sm:flex">
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={`px-4 py-2 mx-1 transition-colors duration-300 transform rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 hover:text-white"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
 
           <button
             onClick={() => handlePageChange(currentPage + 1)}
@@ -228,7 +231,7 @@ const Products = () => {
             disabled={currentPage === totalPages}
           >
             <div className="flex items-center -mx-1">
-              <span className="mx-1">Next</span>
+              <span className="mx-1 hidden sm:inline">Next</span>
               <GoArrowRight />
             </div>
           </button>
