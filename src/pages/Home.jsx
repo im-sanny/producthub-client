@@ -4,12 +4,10 @@ import Products from '../components/Products';
 import { useLoaderData } from 'react-router-dom';
 
 const Home = () => {
-  const products = useLoaderData()
-  console.log(products);
   return (
     <div>
         <Banner></Banner>
-        <Products products={products}></Products>
+        <Products></Products>
     </div>
   )
 }
