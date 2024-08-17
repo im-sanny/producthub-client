@@ -1,7 +1,7 @@
-// import { GoArrowRight, GoArrowLeft } from "react-icons/go";
+import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import axios from 'axios'
+import axios from "axios";
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,16 +10,20 @@ const Products = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortOption, setSortOption] = useState("");
-  const [products, setProducts] = useState([])
-  
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-    useEffect(() =>{
-      const getData = async()=>{
-        const {data} = await axios(`${import.meta.env.VITE_API_URL}/products`)
-        setProducts(data)
-      }
-      getData()
-    }, [])
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios(
+        `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&limit=10`
+      );
+      setProducts(data.products);
+      setTotalPages(data.totalPages);
+    };
+    getData();
+  }, [currentPage]);
 
   const handleSearch = () => {
     filterAndSortProducts();
@@ -86,6 +90,12 @@ const Products = () => {
   };
 
   const filteredProducts = filterAndSortProducts();
+
+  const handlePageChange = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   return (
     <>
@@ -174,6 +184,55 @@ const Products = () => {
         {filteredProducts.map((product) => (
           <Card key={product._id} product={product} />
         ))}
+      </div>
+
+      {/* pagination */}
+      <div className="flex flex-col justify-center items-center w-full mb-10">
+        <div className="flex">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            className={`px-4 py-2 mx-1 ${
+              currentPage === 1
+                ? "text-gray-500 cursor-not-allowed"
+                : "text-gray-700 hover:text-white bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500"
+            } rounded-md`}
+            disabled={currentPage === 1}
+          >
+            <div className="flex items-center -mx-1">
+              <GoArrowLeft />
+              <span className="mx-1">Previous</span>
+            </div>
+          </button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 mx-1 transition-colors duration-300 transform rounded-md ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 hover:text-white"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            className={`px-4 py-2 mx-1 ${
+              currentPage === totalPages
+                ? "text-gray-500 cursor-not-allowed"
+                : "text-gray-700 hover:text-white bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500"
+            } rounded-md`}
+            disabled={currentPage === totalPages}
+          >
+            <div className="flex items-center -mx-1">
+              <span className="mx-1">Next</span>
+              <GoArrowRight />
+            </div>
+          </button>
+        </div>
       </div>
     </>
   );
