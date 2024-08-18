@@ -8,19 +8,27 @@ const Navbar = () => {
     <div className="navbar bg-green-100 shadow-sm mx-auto">
       <div className="flex-1">
         <div className="flex gap-2 items-center">
-          <img className="w-auto h-7" src="" alt="" />
+          <img
+            className="w-auto h-7"
+            src="https://i.ibb.co/yhkWvjK/letter-p-2.png"
+            alt=""
+          />
           <span className="font-bold">ProductHub</span>
         </div>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to={'/'} className="font-bold">Home</Link>
+            <Link to={"/"} className="font-bold">
+              Home
+            </Link>
           </li>
 
           {!user && (
             <li>
-              <Link to={'/signin'} className="font-bold">SignIn</Link>
+              <Link to={"/signin"} className="font-bold">
+                SignIn
+              </Link>
             </li>
           )}
         </ul>
@@ -44,7 +52,10 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li className="mt-2">
-                <button onClick={logOut} className="bg-gray-200 block text-center">
+                <button
+                  onClick={logOut}
+                  className="bg-gray-200 block text-center"
+                >
                   Logout
                 </button>
               </li>

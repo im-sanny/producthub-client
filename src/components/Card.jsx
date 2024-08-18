@@ -19,14 +19,14 @@ const Card = ({ product }) => {
           className="object-cover object-center w-full rounded-md h-60 dark:bg-gray-500"
         />
         <div className="mt-6 mb-2">
-          <span className="block text-xs font-medium tracking-widest uppercase dark:text-violet-600">
+          <span className="block text-xs font-medium dark:text-violet-600">
             <div className="card-actions justify-start">
               <div className="badge badge-outline">
                 <span className="font-bold mr-1">Category:</span>
                 {category}
               </div>
               <div className="badge badge-outline">
-                <span className="font-bold mr-1">Creation date&time:</span>
+                <span className="font-bold mr-1">Creation date:</span>
                 {createdAt}
               </div>
               <div className="badge badge-outline">

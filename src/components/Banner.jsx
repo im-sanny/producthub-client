@@ -16,7 +16,7 @@ const Banner = () => {
                 <div className="my-auto text-center p-5 rounded-lg">
                   <p className="lg:text-5xl md:text-3xl font-bold  max-w-2xl">
                     Welcome to ProductHub! <br />
-                    Here You Can Get All The Product You Want
+                    Here You Can Get All The Products You Want
                   </p>
                 </div>
               </div>
