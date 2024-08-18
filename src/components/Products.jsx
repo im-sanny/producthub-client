@@ -16,17 +16,40 @@ const Products = () => {
 
   useEffect(() => {
     const getData = async () => {
+      const queryParams = new URLSearchParams({
+        page: currentPage,
+        limit: 8,
+        search: searchQuery,
+        brand: selectedBrand,
+        category: selectedCategory,
+        minPrice,
+        maxPrice,
+        sort: sortOption,
+      });
+
       const { data } = await axios(
-        `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&limit=8`
+        `${import.meta.env.VITE_API_URL}/products?${queryParams}`
       );
       setProducts(data.products);
       setTotalPages(data.totalPages);
     };
     getData();
-  }, [currentPage]);
+  }, [
+    currentPage,
+    searchQuery,
+    selectedBrand,
+    selectedCategory,
+    minPrice,
+    maxPrice,
+    sortOption,
+  ]);
 
   const handleSearch = () => {
-    filterAndSortProducts();
+    setCurrentPage(1);
+  };
+
+  const handleFilterChange = () => {
+    setCurrentPage(1);
   };
 
   const handleReset = () => {
@@ -36,60 +59,8 @@ const Products = () => {
     setMinPrice("");
     setMaxPrice("");
     setSortOption("");
+    setCurrentPage(1);
   };
-
-  const filterAndSortProducts = () => {
-    let filteredProducts = products;
-
-    // Search
-    if (searchQuery) {
-      filteredProducts = filteredProducts.filter((product) =>
-        product.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    // Filter by Brand
-    if (selectedBrand) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.brand === selectedBrand
-      );
-    }
-
-    // Filter by Category
-    if (selectedCategory) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category === selectedCategory
-      );
-    }
-
-    // Filter by Price Range
-    if (minPrice) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price >= parseFloat(minPrice)
-      );
-    }
-
-    if (maxPrice) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price <= parseFloat(maxPrice)
-      );
-    }
-
-    // Sort
-    if (sortOption === "Price: Low to High") {
-      filteredProducts = filteredProducts.sort((a, b) => a.price - b.price);
-    } else if (sortOption === "Price: High to Low") {
-      filteredProducts = filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sortOption === "Date Added: Newest First") {
-      filteredProducts = filteredProducts.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    }
-
-    return filteredProducts;
-  };
-
-  const filteredProducts = filterAndSortProducts();
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -107,9 +78,15 @@ const Products = () => {
           placeholder="search..."
           className="input input-bordered w-full max-w-xs my-6"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            handleFilterChange();
+          }}
         />
-        <button onClick={handleSearch} className="btn btn-active btn-accent">
+        <button
+          onClick={handleFilterChange}
+          className="btn btn-active btn-accent"
+        >
           Search
         </button>
         <button onClick={handleReset} className="btn btn-secondary ml-2">
@@ -122,7 +99,10 @@ const Products = () => {
         <select
           className="select select-bordered w-full max-w-xs"
           value={selectedBrand}
-          onChange={(e) => setSelectedBrand(e.target.value)}
+          onChange={(e) => {
+            setSelectedBrand(e.target.value);
+            handleFilterChange();
+          }}
         >
           <option value="" disabled>
             Brand Name
@@ -137,7 +117,10 @@ const Products = () => {
         <select
           className="select select-bordered w-full max-w-xs"
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            handleFilterChange();
+          }}
         >
           <option value="" disabled>
             Category Name
@@ -154,7 +137,10 @@ const Products = () => {
           placeholder="Min Price"
           className="input input-bordered w-full max-w-xs"
           value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
+          onChange={(e) => {
+            setMinPrice(e.target.value);
+            handleFilterChange();
+          }}
         />
 
         <input
@@ -162,13 +148,19 @@ const Products = () => {
           placeholder="Max Price"
           className="input input-bordered w-full max-w-xs"
           value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
+          onChange={(e) => {
+            setMaxPrice(e.target.value);
+            handleFilterChange();
+          }}
         />
 
         <select
           className="select select-bordered w-full max-w-xs"
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
+          onChange={(e) => {
+            setSortOption(e.target.value);
+            handleFilterChange();
+          }}
         >
           <option value="" disabled>
             Sort By
@@ -181,7 +173,7 @@ const Products = () => {
 
       {/* cards */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-5 lg:mb-10 my-5 lg:mx-16 mx-5">
-        {filteredProducts.map((product) => (
+        {products.map((product) => (
           <Card key={product._id} product={product} />
         ))}
       </div>

@@ -4,7 +4,7 @@ const Banner = () => {
       <div className="my-5 rounded-lg h-auto mx-5">
         <div className="max-w-7xl mx-auto">
           <div
-            className="rounded-lg bg-cover bg-fixed bg-center"
+            className="rounded-lg bg-cover bg-center"
             style={{
               backgroundImage: `url('https://i.ibb.co/VvqhrLP/pexels-karolina-grabowska-5650052.jpg')`,
               height: "500px",
