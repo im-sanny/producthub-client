@@ -42,7 +42,7 @@ const Card = ({ product }) => {
           </span>
           <p className=" tracking-wide"></p>
           <h2 className="text-xl font-semibold ">{productName}</h2>
-          <p className="dark:text-gray-800">{description}</p>
+          <p className="">{description}</p>
         </div>
       </div>
     </>

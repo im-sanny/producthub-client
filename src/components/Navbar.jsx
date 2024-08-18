@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   return (
-    <div className="navbar bg-green-100 shadow-sm mx-auto">
+    <div className="navbar shadow-sm mx-auto bg-base-100">
       <div className="flex-1">
         <div className="flex gap-2 items-center">
           <img
